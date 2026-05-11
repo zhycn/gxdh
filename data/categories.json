@@ -1,0 +1,14 @@
+[
+  { "id": "ai", "name": "AI 工具", "icon": "Brain" },
+  { "id": "dev", "name": "开发资源", "icon": "Code" },
+  { "id": "design", "name": "设计工具", "icon": "Palette" },
+  { "id": "media", "name": "影音娱乐", "icon": "Film" },
+  { "id": "news", "name": "新闻资讯", "icon": "Newspaper" },
+  { "id": "shopping", "name": "购物", "icon": "ShoppingBag" },
+  { "id": "finance", "name": "金融理财", "icon": "Landmark" },
+  { "id": "education", "name": "教育学习", "icon": "GraduationCap" },
+  { "id": "social", "name": "社交媒体", "icon": "MessageCircle" },
+  { "id": "tools", "name": "实用工具", "icon": "Wrench" },
+  { "id": "game", "name": "游戏", "icon": "Gamepad2" },
+  { "id": "travel", "name": "旅行出行", "icon": "Plane" }
+]
