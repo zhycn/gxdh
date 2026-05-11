@@ -1,5 +1,6 @@
 import type { ScriptProps } from "next/script";
 import Script from "next/script";
+import { siteUrl } from "@/lib/config";
 
 interface JsonLdProps extends ScriptProps {
   data: Record<string, unknown>;
@@ -18,8 +19,6 @@ export function JsonLd({ data, ...props }: JsonLdProps) {
 }
 
 export function OrganizationJsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://gxdh.vercel.app";
-
   return (
     <JsonLd
       data={{

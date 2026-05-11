@@ -2,6 +2,7 @@
 
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import categories from "@/data/categories.json";
 
 interface LinkItemProps {
@@ -19,23 +20,31 @@ export function LinkItem({ name, url, category, description }: LinkItemProps) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-col gap-1 rounded-lg border border-border p-4 transition-colors hover:bg-accent"
+      className="block transition-colors hover:bg-accent rounded-xl"
     >
-      <div className="flex items-center gap-2">
-        <span className="font-medium">{name}</span>
-        <ExternalLink
-          className="size-3 text-muted-foreground"
-          data-icon="inline-start"
-        />
-      </div>
-      {description && (
-        <p className="text-sm text-muted-foreground">{description}</p>
-      )}
-      {categoryInfo && (
-        <Badge variant="secondary" className="w-fit mt-1">
-          {categoryInfo.name}
-        </Badge>
-      )}
+      <Card
+        size="sm"
+        className="ring-foreground/5 hover:ring-foreground/10 transition-[ring-color]"
+      >
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {name}
+            <ExternalLink className="size-3 text-muted-foreground" />
+          </CardTitle>
+        </CardHeader>
+        {(description || categoryInfo) && (
+          <CardContent>
+            {description && (
+              <p className="text-sm text-muted-foreground">{description}</p>
+            )}
+            {categoryInfo && (
+              <Badge variant="secondary" className="mt-1">
+                {categoryInfo.name}
+              </Badge>
+            )}
+          </CardContent>
+        )}
+      </Card>
     </a>
   );
 }

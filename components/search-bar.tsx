@@ -26,6 +26,7 @@ export function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="pl-9"
+        aria-label="搜索"
       />
     </div>
   );

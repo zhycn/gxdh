@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { JsonLd } from "@/components/json-ld";
+import { ThemeProvider } from "next-themes";
+import { OrganizationJsonLd } from "@/components/json-ld";
+import { siteUrl } from "@/lib/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,8 +14,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://gxdh.vercel.app";
 
 export const metadata: Metadata = {
   title: {
@@ -86,22 +86,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <JsonLd
-          data={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            name: "国信导航",
-            url: siteUrl,
-            description: "精选网址导航站，提供多分类快捷入口",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: `${siteUrl}/?q={search_term_string}`,
-              "query-input": "required name=search_term_string",
-            },
-          }}
-        />
+        <OrganizationJsonLd />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, Globe, Menu } from "lucide-react";
+import { Globe, Menu, PanelLeftOpen } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LinkList } from "@/components/link-list";
 import { SearchBar } from "@/components/search-bar";
@@ -60,36 +60,36 @@ export default function Home() {
       />
 
       <main className="flex flex-1 flex-col overflow-hidden">
-        {/* 顶部栏 */}
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
-          {/* 移动端汉堡菜单 / 折叠时 Logo + 展开按钮 */}
-          {(!sidebarOpen || isMobile) && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="打开导航"
-            >
-              {isMobile ? (
-                <Menu className="size-5" data-icon="inline-start" />
-              ) : (
-                <>
-                  <Globe className="size-5" data-icon="inline-start" />
-                  <span className="text-sm font-medium">国信导航</span>
-                  <ChevronRight
-                    className="size-4 text-muted-foreground"
-                    data-icon="inline-start"
-                  />
-                </>
-              )}
-            </Button>
-          )}
+          {isMobile ? (
+            !sidebarOpen && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="打开导航"
+              >
+                <Menu className="size-5" />
+              </Button>
+            )
+          ) : !sidebarOpen ? (
+            <div className="flex items-center gap-1">
+              <Globe className="size-5" />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="展开导航"
+              >
+                <PanelLeftOpen className="size-4" />
+              </Button>
+            </div>
+          ) : null}
 
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
           <ThemeToggle />
         </header>
 
-        {/* 内容区 */}
         <div className="flex-1 overflow-hidden">
           <LinkList links={filteredLinks} />
         </div>
