@@ -2,11 +2,12 @@
 
 import {
   Brain,
+  ChevronLeft,
   Code,
   Film,
   Gamepad2,
+  Globe,
   GraduationCap,
-  Home,
   Landmark,
   type LucideIcon,
   MessageCircle,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import categories from "@/data/categories.json";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +29,7 @@ interface SidebarProps {
   onSelectCategory: (id: string | null) => void;
   isOpen: boolean;
   isMobile: boolean;
+  onToggle: () => void;
   onClose: () => void;
 }
 
@@ -50,6 +53,7 @@ export function Sidebar({
   onSelectCategory,
   isOpen,
   isMobile,
+  onToggle,
   onClose,
 }: SidebarProps) {
   if (isMobile) {
@@ -71,7 +75,10 @@ export function Sidebar({
           )}
         >
           <div className="flex h-14 items-center justify-between px-4">
-            <span className="text-lg font-semibold">国信导航</span>
+            <div className="flex items-center gap-2">
+              <Globe className="size-5" data-icon="inline-start" />
+              <span className="text-lg font-semibold">国信导航</span>
+            </div>
             <Button
               variant="ghost"
               size="icon"
@@ -81,6 +88,7 @@ export function Sidebar({
               <X className="size-4" data-icon="inline-start" />
             </Button>
           </div>
+          <Separator />
           <ScrollArea className="flex-1 px-2 py-2">
             <div className="flex flex-col gap-1">
               <Button
@@ -94,11 +102,14 @@ export function Sidebar({
                   onClose();
                 }}
               >
-                <Home className="size-4" data-icon="inline-start" />
+                <Globe className="size-4" data-icon="inline-start" />
                 <span className="font-medium">首页</span>
               </Button>
+              <div className="px-3 py-2 text-xs font-medium text-muted-foreground">
+                分类
+              </div>
               {categories.map((cat) => {
-                const Icon = iconMap[cat.icon] ?? Home;
+                const Icon = iconMap[cat.icon] ?? Globe;
                 return (
                   <Button
                     key={cat.id}
@@ -132,7 +143,25 @@ export function Sidebar({
         isOpen ? "w-64" : "w-0 overflow-hidden",
       )}
     >
-      <ScrollArea className="flex-1 px-2 py-4">
+      {/* Logo + 折叠按钮 */}
+      <div className="flex h-14 shrink-0 items-center justify-between px-4">
+        <div className="flex items-center gap-2">
+          <Globe className="size-5" data-icon="inline-start" />
+          <span className="text-lg font-semibold">国信导航</span>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onToggle}
+          aria-label={isOpen ? "折叠导航" : "展开导航"}
+        >
+          <ChevronLeft className="size-4" data-icon="inline-start" />
+        </Button>
+      </div>
+      <Separator />
+
+      {/* 分类列表 */}
+      <ScrollArea className="flex-1 px-2 py-2">
         <div className="flex flex-col gap-1">
           <Button
             variant="ghost"
@@ -142,11 +171,14 @@ export function Sidebar({
             )}
             onClick={() => onSelectCategory(null)}
           >
-            <Home className="size-4" data-icon="inline-start" />
+            <Globe className="size-4" data-icon="inline-start" />
             <span className="font-medium">首页</span>
           </Button>
+          <div className="px-3 py-2 text-xs font-medium text-muted-foreground">
+            分类
+          </div>
           {categories.map((cat) => {
-            const Icon = iconMap[cat.icon] ?? Home;
+            const Icon = iconMap[cat.icon] ?? Globe;
             return (
               <Button
                 key={cat.id}

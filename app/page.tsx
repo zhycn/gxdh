@@ -1,10 +1,11 @@
 "use client";
 
-import { ChevronLeft, Menu } from "lucide-react";
+import { ChevronRight, Globe, Menu } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LinkList } from "@/components/link-list";
 import { SearchBar } from "@/components/search-bar";
 import { Sidebar } from "@/components/sidebar";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { searchLinksByCategory } from "@/lib/search";
 
@@ -54,31 +55,44 @@ export default function Home() {
         onSelectCategory={setActiveCategory}
         isOpen={sidebarOpen}
         isMobile={isMobile}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
         onClose={() => setSidebarOpen(false)}
       />
 
       <main className="flex flex-1 flex-col overflow-hidden">
+        {/* 顶部栏 */}
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            aria-label={sidebarOpen ? "折叠导航" : "展开导航"}
-          >
-            {sidebarOpen ? (
-              <ChevronLeft className="size-5" data-icon="inline-start" />
-            ) : (
-              <Menu className="size-5" data-icon="inline-start" />
-            )}
-          </Button>
-          <h1 className="text-lg font-semibold">国信导航</h1>
+          {/* 移动端汉堡菜单 / 折叠时 Logo + 展开按钮 */}
+          {(!sidebarOpen || isMobile) && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="打开导航"
+            >
+              {isMobile ? (
+                <Menu className="size-5" data-icon="inline-start" />
+              ) : (
+                <>
+                  <Globe className="size-5" data-icon="inline-start" />
+                  <span className="text-sm font-medium">国信导航</span>
+                  <ChevronRight
+                    className="size-4 text-muted-foreground"
+                    data-icon="inline-start"
+                  />
+                </>
+              )}
+            </Button>
+          )}
+
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+          <ThemeToggle />
         </header>
 
-        <div className="border-b border-border p-4">
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        {/* 内容区 */}
+        <div className="flex-1 overflow-hidden">
+          <LinkList links={filteredLinks} />
         </div>
-
-        <LinkList links={filteredLinks} />
       </main>
     </div>
   );

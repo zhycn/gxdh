@@ -18,7 +18,7 @@ export function LinkList({ links }: LinkListProps) {
   }
 
   return (
-    <ScrollArea className="flex-1">
+    <ScrollArea className="h-full">
       <div className="grid grid-cols-1 gap-3 p-4 md:grid-cols-2 lg:grid-cols-3">
         {links.map((link) => (
           <LinkItemComponent
