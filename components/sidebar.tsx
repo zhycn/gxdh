@@ -15,17 +15,18 @@ import {
   Plane,
   ShoppingBag,
   Wrench,
+  X,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import categories from "@/data/categories.json";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   activeCategory: string | null;
   onSelectCategory: (id: string | null) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const iconMap: Record<string, LucideIcon> = {
@@ -43,47 +44,83 @@ const iconMap: Record<string, LucideIcon> = {
   Plane,
 };
 
-export function Sidebar({ activeCategory, onSelectCategory }: SidebarProps) {
+export function Sidebar({
+  activeCategory,
+  onSelectCategory,
+  isOpen,
+  onClose,
+}: SidebarProps) {
   return (
-    <aside className="flex h-full w-60 flex-col border-r border-border bg-sidebar">
-      <div className="flex h-14 items-center gap-2 px-4">
-        <Button
-          variant="ghost"
-          className={cn(
-            "flex flex-1 justify-start gap-2",
-            activeCategory === null &&
-              "bg-sidebar-accent text-sidebar-accent-foreground",
-          )}
-          onClick={() => onSelectCategory(null)}
-        >
-          <Home className="size-4" data-icon="inline-start" />
-          <span className="font-medium">首页</span>
-        </Button>
-        <ThemeToggle />
-      </div>
-      <Separator />
-      <ScrollArea className="flex-1 px-2 py-2">
-        <div className="flex flex-col gap-1">
-          {categories.map((cat) => {
-            const Icon = iconMap[cat.icon] ?? Home;
-            return (
-              <Button
-                key={cat.id}
-                variant="ghost"
-                className={cn(
-                  "justify-start gap-2",
-                  activeCategory === cat.id &&
-                    "bg-sidebar-accent text-sidebar-accent-foreground",
-                )}
-                onClick={() => onSelectCategory(cat.id)}
-              >
-                <Icon className="size-4" data-icon="inline-start" />
-                {cat.name}
-              </Button>
-            );
-          })}
+    <>
+      {/* Overlay */}
+      {isOpen && (
+        <button
+          type="button"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={onClose}
+          onKeyDown={(e) => e.key === "Escape" && onClose()}
+          aria-label="关闭导航"
+        />
+      )}
+
+      {/* Drawer */}
+      <aside
+        className={cn(
+          "fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-border bg-background shadow-lg transition-transform duration-300 ease-in-out lg:z-40",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        <div className="flex h-14 items-center justify-between px-4">
+          <span className="text-lg font-semibold">国信导航</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            aria-label="关闭导航"
+          >
+            <X className="size-4" data-icon="inline-start" />
+          </Button>
         </div>
-      </ScrollArea>
-    </aside>
+        <ScrollArea className="flex-1 px-2 py-2">
+          <div className="flex flex-col gap-1">
+            <Button
+              variant="ghost"
+              className={cn(
+                "justify-start gap-2",
+                activeCategory === null && "bg-accent text-accent-foreground",
+              )}
+              onClick={() => {
+                onSelectCategory(null);
+                onClose();
+              }}
+            >
+              <Home className="size-4" data-icon="inline-start" />
+              <span className="font-medium">首页</span>
+            </Button>
+            {categories.map((cat) => {
+              const Icon = iconMap[cat.icon] ?? Home;
+              return (
+                <Button
+                  key={cat.id}
+                  variant="ghost"
+                  className={cn(
+                    "justify-start gap-2",
+                    activeCategory === cat.id &&
+                      "bg-accent text-accent-foreground",
+                  )}
+                  onClick={() => {
+                    onSelectCategory(cat.id);
+                    onClose();
+                  }}
+                >
+                  <Icon className="size-4" data-icon="inline-start" />
+                  {cat.name}
+                </Button>
+              );
+            })}
+          </div>
+        </ScrollArea>
+      </aside>
+    </>
   );
 }
