@@ -1,2 +1,2 @@
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://gxdh.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";

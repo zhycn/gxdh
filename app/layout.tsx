@@ -53,25 +53,25 @@ export const metadata: Metadata = {
     description: "精选网址导航站，提供多分类快捷入口",
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
-        width: 1200,
-        height: 630,
+        url: `${siteUrl}/file.svg`,
+        width: 512,
+        height: 512,
         alt: "国信导航",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "国信导航 - 你的专属导航站",
     description: "精选网址导航站，提供多分类快捷入口",
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/file.svg`],
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/file.svg", type: "image/svg+xml" },
+    ],
   },
-  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 国信导航 (gxdh)
 
-## Getting Started
+精选网址导航站，提供 AI 工具、开发资源、设计工具、影音娱乐等多分类快捷入口。
 
-First, run the development server:
+## 技术栈
+
+- **框架**: Next.js 16 (App Router)
+- **语言**: TypeScript (strict mode)
+- **UI**: shadcn/ui + Tailwind CSS v4 + Base UI
+- **字体**: Geist (Vercel Font)
+- **图标**: lucide-react
+- **搜索**: fuse.js (客户端模糊搜索)
+- **主题**: next-themes (暗色模式)
+- **Lint/Format**: Biome
+- **部署**: Vercel
+
+## 本地开发
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问 [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 数据维护
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+导航链接数据在 `data/links.json`，分类数据在 `data/categories.json`。添加/修改链接后需重新构建生效。
 
-## Learn More
+## 可用脚本
 
-To learn more about Next.js, take a look at the following resources:
+| 命令 | 说明 |
+|------|------|
+| `pnpm dev` | 启动开发服务器 |
+| `pnpm build` | 生产构建 |
+| `pnpm start` | 启动生产服务器 |
+| `pnpm lint` | 代码检查 (Biome) |
+| `pnpm format` | 代码格式化 (Biome) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 部署
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+项目部署在 Vercel，推送到 `main` 或 `feature/*` 分支自动触发 CI 构建与部署。
