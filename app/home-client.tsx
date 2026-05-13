@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Menu, PanelLeftOpen } from "lucide-react";
+import { Globe, Menu, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LinkList } from "@/components/link-list";
 import { SearchBar } from "@/components/search-bar";
@@ -55,14 +55,13 @@ export function HomeClient() {
         onSelectCategory={setActiveCategory}
         isOpen={sidebarOpen}
         isMobile={isMobile}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
         onClose={() => setSidebarOpen(false)}
       />
 
       <main className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-4">
-          {isMobile ? (
-            !sidebarOpen && (
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border px-3">
+          <div className="flex items-center gap-1 shrink-0">
+            {isMobile ? (
               <Button
                 variant="ghost"
                 size="icon"
@@ -71,27 +70,33 @@ export function HomeClient() {
               >
                 <Menu className="size-5" />
               </Button>
-            )
-          ) : !sidebarOpen ? (
-            <div className="flex items-center gap-1">
-              <Globe className="size-5" />
+            ) : (
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setSidebarOpen(true)}
-                aria-label="展开导航"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label={sidebarOpen ? "折叠导航" : "展开导航"}
               >
-                <PanelLeftOpen className="size-4" />
+                {sidebarOpen ? (
+                  <PanelLeftClose className="size-4" />
+                ) : (
+                  <PanelLeftOpen className="size-4" />
+                )}
               </Button>
-            </div>
-          ) : null}
+            )}
+            <Globe className="size-5 text-primary" />
+          </div>
 
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
           <ThemeToggle />
         </header>
 
         <div className="flex-1 overflow-hidden">
-          <LinkList links={filteredLinks} />
+          <LinkList
+            links={filteredLinks}
+            searchQuery={debouncedQuery}
+            onClearSearch={() => setSearchQuery("")}
+          />
         </div>
       </main>
     </div>

@@ -20,25 +20,25 @@ export function LinkItem({ name, url, category, description }: LinkItemProps) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block transition-colors hover:bg-accent rounded-xl"
+      className="block rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg"
     >
       <Card
         size="sm"
-        className="ring-foreground/5 hover:ring-foreground/10 transition-[ring-color]"
+        className="h-full ring-foreground/5 transition-all hover:ring-foreground/20"
       >
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {name}
-            <ExternalLink className="size-3 text-muted-foreground" />
+            <ExternalLink className="size-4 text-muted-foreground/60 transition-colors group-hover/card:text-muted-foreground" />
           </CardTitle>
         </CardHeader>
         {(description || categoryInfo) && (
-          <CardContent>
+          <CardContent className="flex-1">
             {description && (
               <p className="text-sm text-muted-foreground">{description}</p>
             )}
             {categoryInfo && (
-              <Badge variant="secondary" className="mt-1">
+              <Badge variant="secondary" className="mt-1.5">
                 {categoryInfo.name}
               </Badge>
             )}
